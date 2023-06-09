@@ -24,7 +24,7 @@ Route::get('/admin/add-room', [AdminController::class, 'addRoom']);
 Route::get('/admin/edit-room/{roomNo}', [AdminController::class, 'editRoom']);
 
 Route::post('/admin/create-room', [RoomController::class, 'create']);
-Route::post('/admin/update-customer', [AdminController::class, 'updateCustomer']);
+Route::post('/admin/update-customer/{roomNo}', [AdminController::class, 'updateCustomer']);
 
 Route::delete('/admin/delete/{roomNo}', [RoomController::class, 'delete']);
 

@@ -35,12 +35,20 @@ class AdminController extends Controller
         ]);
     }
 
-    public function updateCustomer(Request $request)
+    public function updateCustomer(Request $request, $roomNo)
     {
         $id = $request->input('id');
         $name = $request->input('name');
         $phone = $request->input('phone');
+        $submitButton = $request->input('submit');
 
+        if ($submitButton === 'remove') {
+            $room = Room::where('room_no', $roomNo)->first();
+            $room->customer_id = null;
+            $room->save();
+
+            return redirect('/admin')->with('success', 'Ruangan berhasil dikosongkan');
+        }
 
         if ($id === null) {
             $customer = new Customer();
@@ -48,13 +56,19 @@ class AdminController extends Controller
             $customer = Customer::where('customer_id', $id)->first();
 
             if ($customer === null) {
-                return back()->with('error', 'Customer tidak ditemukan');
+                return back()->with('error', 'Customer not found');
             }
         }
 
         $customer->name = $name;
         $customer->phone = $phone;
         $customer->save();
+
+        $room = Room::where('room_no', $roomNo)->first();
+        if ($room->customer_id === null) {
+            $room->customer_id = $customer->customer_id;
+            $room->save();
+        }
 
         return redirect('/admin')->with('success', 'Update berhasil');
     }

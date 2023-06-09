@@ -3,7 +3,7 @@
 @section('title', 'Form')
 
 @section('content')
-    <form action="/admin/update-customer" method="POST" onsubmit="return confirm('Anda yakin data sudah benar?')"
+    <form action="/admin/update-customer/{{ $room_no }}" method="POST" onsubmit="return confirmSubmit()"
         class="bg-white flex flex-col gap-10 p-5 items-end rounded-xl shadow-md">
         @csrf
         <h2 class="font-semibold text-start w-full text-3xl">Penghuni Kamar Nomor {{ $room_no }}</h2>
@@ -32,11 +32,30 @@
         </div>
 
 
-        <button type="submit"
-            class="bg-gold w-fit text-white border-[1.5px] border-gold font-semibold py-2 px-5 rounded-md hover:bg-transparent hover:text-gold transition-all duration-150">Submit</button>
+        <div class="flex gap-2">
+            <button onclick="setConfirmationMessage('Anda yakin ingin menyimpan data?')" type="submit" name="submit"
+                value="save"
+                class="bg-gold w-fit text-white border-[1.5px] border-gold font-semibold py-2 px-5 rounded-md hover:bg-transparent hover:text-gold transition-all duration-150">Submit</button>
 
-
+            <button onclick="setConfirmationMessage('Anda yakin ingin menghapus data?')" type="submit" name="submit"
+                value="remove"
+                class="bg-red-500 w-fit text-gold hover:text-rose-500 hover:border-rose-500 border-[1.5px] border-gold font-semibold py-2 px-5 rounded-md transition-all duration-150">Kosongkan
+                Kamar</button>
+        </div>
     </form>
+
+
+    <script>
+        function setConfirmationMessage(message) {
+            var confirmationMessage = message;
+            sessionStorage.setItem('confirmationMessage', confirmationMessage);
+        }
+
+        function confirmSubmit() {
+            var confirmationMessage = sessionStorage.getItem('confirmationMessage');
+            return confirm(confirmationMessage);
+        }
+    </script>
 
 
 
