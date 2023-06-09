@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;500;700&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    @apply scroll-smooth;
+}
+
+body {
+    @apply bg-light-grey;
+    font-family: "Work Sans", sans-serif;
+}
+
+.logo {
+    font-family: "Lexend", sans-serif;
+}
